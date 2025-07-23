@@ -1,11 +1,11 @@
-<div class="flex flex-col h-[100dvh] w-[100vw]">
+<div class="flex flex-col h-[calc(100dvh-16px)] w-[100vw]">
     <nav class="flex justify-between items-center w-full h-[60px] px-4 bg-[color:var(--background-primary)]">
         <section class="left flex items-center w-[50vw] h-full gap-12">
-            <h1 class="font-mono text-5xl text-[color:var(--primary-color)]">EVENTIFY</h1>
+            <h1 class="font-mono text-5xl text-[color:var(--primary-color)] uppercase">{{title()}}</h1>
             <ul class="flex gap-6 text-[color:var(--text-light)]">
-                <li><a href="#" [routerLink]="['/']">Home</a></li>
-                <li><a href="#" [routerLink]="['/create']">Crear evento</a></li>
-                <li><a href="#" [routerLink]="['/my-events']">Mis eventos</a></li>
+                @for (route of navRoutes(); track $index) {
+                    <li><a href="#" [routerLink]="[route.path]">{{route.title}}</a></li>
+                }
             </ul>
         </section>
         <section class="right flex items-center w-[50vw] h-full">

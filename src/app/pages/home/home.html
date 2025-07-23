@@ -1,14 +1,13 @@
-<div class="home-container flex flex-col w-full h-full px-6 py-4">
+<div class="home-container flex flex-col w-full h-full px-6 py-4 gap-6">
     <h1 class="text-xl font-medium">Próximos Eventos</h1>
     <div class="card-container grid grid-cols-3 gap-4 justify-start">
-        <app-event-card [loading]="true"></app-event-card>
         @for (event of events; track event.id) {
-        <app-event-card [event]="event"></app-event-card>
+            <app-event-card [event]="event"></app-event-card>
         }
         @if (events && eventsLoading) {
             <app-event-card [loading]="true"></app-event-card>
         } 
-        @else {
+        @else if (!events || events.length === 0) {
             <li>There are no items.</li>
         }
     </div>
