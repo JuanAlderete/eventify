@@ -1,1 +1,62 @@
-<p>event-details works!</p>
+<div
+    class="flex flex-col items-center bg-[color:var(--background-primary)] text-[color:var(--text-light)] rounded-3xl shadow-2xl p-10 max-w-[70vw] mx-auto gap-8 mt-8 relative">
+    <span class="absolute right-6 top-6 text-xl cursor-pointer" title="Editar" (click)="goEditEvent()">✏️</span>
+    <div class="w-full flex justify-center">
+        <img class="w-full max-w-lg rounded-2xl shadow-lg object-cover aspect-[16/9]" [src]="eventSelected().imageUrl"
+            alt="Imagen del evento" loading="lazy" />
+    </div>
+    <div class="w-full flex flex-col gap-6">
+        <h1 class="text-4xl font-bold text-primary-color tracking-wide mb-2 drop-shadow-lg">{{ eventSelected().title }}
+        </h1>
+        <div class="flex flex-wrap gap-4 text-base text-text-light opacity-85">
+            <span
+                class="flex items-center gap-2 bg-[color:var(--background-dark)] px-3 py-1 rounded-xl font-medium shadow-sm">
+                <span>📅</span>
+                {{ eventSelected().date | date:'longDate' }}
+            </span>
+            <span
+                class="flex items-center gap-2 bg-[color:var(--background-dark)] px-3 py-1 rounded-xl font-medium shadow-sm">
+                <span>⏰</span>
+                {{ eventSelected().time }}
+            </span>
+            <span
+                class="flex items-center gap-2 bg-[color:var(--background-dark)] px-3 py-1 rounded-xl font-medium shadow-sm">
+                <span>📍</span>
+                {{ eventSelected().location }}
+            </span>
+            <span
+                class="flex items-center gap-2 bg-[color:var(--background-dark)] px-3 py-1 rounded-xl font-medium shadow-sm">
+                <span>🏷️</span>
+                {{ eventSelected().category }}
+            </span>
+        </div>
+        <div class="text-lg leading-relaxed bg-[color:var(--background-dark)] p-6 rounded-xl shadow-sm">
+            {{ eventSelected().description }}
+        </div>
+        <div class="flex flex-col gap-4">
+            <span
+                class="flex items-center gap-2 bg-[color:var(--background-dark)] px-3 py-1 rounded-xl font-medium shadow-sm w-fit">
+                <span>👤</span>
+                Organizador: {{ eventSelected().organizer }}
+            </span>
+            <div class="flex justify-between">
+                <div class="flex flex-wrap gap-4">
+                    <span
+                        class="flex items-center gap-2 bg-[color:var(--background-dark)] px-3 py-1 rounded-xl font-medium shadow-sm">
+                        <span>👥</span>
+                        Capacidad: {{ eventSelected().capacity }}
+                    </span>
+                    <span
+                        class="flex items-center gap-2 bg-[color:var(--background-dark)] px-3 py-1 rounded-xl font-medium shadow-sm">
+                        <span>✔️</span>
+                        Asistentes: {{ eventSelected().attendees.length }}
+                    </span>
+                </div>
+                <button
+                    class="bg-[color:var(--primary-color)] text-white rounded-xl px-6 font-medium cursor-pointer hover:bg-orange-500">
+                    Registrarse
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 <div class="flex flex-col h-[calc(100dvh-16px)] w-[100vw]">
     <nav class="flex justify-between items-center w-full h-[60px] px-4 bg-[color:var(--background-primary)]">
         <section class="left flex items-center w-[50vw] h-full gap-12">
-            <h1 class="font-mono text-5xl text-[color:var(--primary-color)] uppercase">{{title()}}</h1>
+            <h1 class="font-mono text-5xl text-[color:var(--primary-color)] uppercase cursor-pointer" [routerLink]="['/']">{{title()}}</h1>
             <ul class="flex gap-6 text-[color:var(--text-light)]">
                 @for (route of navRoutes(); track $index) {
                     <li><a href="#" [routerLink]="[route.path]">{{route.title}}</a></li>
@@ -13,3 +13,4 @@
     </nav>
     <router-outlet></router-outlet>
 </div>
+<app-toast></app-toast>

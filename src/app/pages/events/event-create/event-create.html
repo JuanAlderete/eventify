@@ -2,36 +2,37 @@
     [formGroup]="eventForm">
     <div class="flex flex-col gap-4">
         <label for="title" class="text-lg font-bold">Título</label>
-        <input type="text" id="title" class="w-full rounded-md border-2 border-gray-300 p-2"
+        <input type="text" id="title" class="w-full rounded-md border-2 border-gray-300 p-2 bg-white"
             placeholder="Título del evento" formControlName="title">
     </div>
     <div class="flex flex-col gap-4">
         <label for="description" class="text-lg font-bold">Descripción</label>
         <textarea id="description" maxlength="250"
-            class="w-full rounded-md border-2 border-gray-300 p-2 resize-none h-25" placeholder="Descripción del evento"
-            formControlName="description"></textarea>
+            class="w-full rounded-md border-2 border-gray-300 p-2 resize-none h-25 bg-white"
+            placeholder="Descripción del evento" formControlName="description"></textarea>
     </div>
     <div class="flex flex-col gap-4">
         <label for="date" class="text-lg font-bold">Fecha</label>
-        <input type="date" id="date" class="w-full rounded-md border-2 border-gray-300 p-2"
+        <input type="date" id="date" class="w-full rounded-md border-2 border-gray-300 p-2 bg-white"
             placeholder="Fecha del evento" formControlName="date">
     </div>
     <div class="flex flex-col gap-4">
         <label for="time" class="text-lg font-bold">Hora</label>
-        <input type="time" id="time" class="w-full rounded-md border-2 border-gray-300 p-2"
+        <input type="time" id="time" class="w-full rounded-md border-2 border-gray-300 p-2 bg-white"
             placeholder="Hora del evento" formControlName="time">
     </div>
     <div class="flex flex-col gap-4">
         <label for="location" class="text-lg font-bold">Lugar</label>
-        <input type="text" id="location" class="w-full rounded-md border-2 border-gray-300 p-2"
+        <input type="text" id="location" class="w-full rounded-md border-2 border-gray-300 p-2 bg-white"
             placeholder="Lugar del evento" formControlName="location">
     </div>
     <div class="flex flex-col gap-4">
         <label for="imageUrl" class="text-lg font-bold">Imagen</label>
-        <input type="text" id="imageUrl" class="w-full rounded-md border-2 border-gray-300 p-2"
+        <input type="text" id="imageUrl" class="w-full rounded-md border-2 border-gray-300 p-2 bg-white"
             placeholder="Imagen del evento" formControlName="imageUrl">
     </div>
     <button type="submit" (click)="onSubmit()"
-        class="mx-auto text-md font-bold text-[color:var(--text-dark)] bg-[color:var(--primary-color)] hover:ring-2 ring-[color:var(--text-dark)] cursor-pointer w-50 p-2 rounded-md">Crear
-        evento</button>
+        class="mx-auto text-md font-bold text-[color:var(--text-dark)] bg-[color:var(--primary-color)] hover:ring-2 ring-[color:var(--text-dark)] cursor-pointer w-50 p-2 rounded-md">
+        {{ eventId() ? 'Editar evento' : 'Crear evento' }}
+    </button>
 </div>

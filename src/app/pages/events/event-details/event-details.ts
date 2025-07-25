@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventIn } from '../../../models/event.model';
 import { EventService } from '../../../services/events.service';
 
@@ -16,12 +16,12 @@ export class EventDetails {
   eventId = signal<string>('');
   eventSelected = signal<EventIn>({} as EventIn);
 
-  constructor(private readonly route: ActivatedRoute, private readonly eventSrv: EventService){
+  constructor(private readonly route: ActivatedRoute, private readonly eventSrv: EventService, private readonly router: Router) {
     this.route.params.subscribe(params => {
       const { id } = params;
-      if(!id){
+      if (!id) {
         alert('No se pudo cargar el evento');
-        return 
+        return
       }
       this.eventId.set(id);
       this.eventSrv.getEventById(id).subscribe({
@@ -33,6 +33,10 @@ export class EventDetails {
         }
       });
     });
+  }
+
+  goEditEvent() {
+    this.router.navigate(['/create/' + this.eventId()]);
   }
 
 }

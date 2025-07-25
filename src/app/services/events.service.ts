@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, map, Observable, of, throwError } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { EventIn } from '../models/event.model';
 import { v4 as uuid } from 'uuid'
 
