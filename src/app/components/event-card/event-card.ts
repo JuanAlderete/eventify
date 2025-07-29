@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { EventIn } from '../../models/event.model';
 import { RouterLink } from '@angular/router';
+import { EventService } from '../../services/events.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-event-card',
@@ -15,11 +17,25 @@ export class EventCard implements OnInit {
   @Input() event: EventIn = {} as EventIn;
   @Input() loading: boolean = false;
 
-  constructor(){
+  constructor(private readonly eventSrv: EventService, private readonly toastSrv: ToastService){
   }
 
   ngOnInit(){
     console.log(this.event);
+  }
+
+  registerAttendee(){
+    console.log('registerAttendee');
+    this.eventSrv.registerAttendee(this.event.id, this.event.attendees[0]).subscribe({
+      next: (res) => {
+        console.log('Asistente registrado', res);
+        this.toastSrv.success('Te has registrado como asistente del evento');
+      },
+      error: (err) => {
+        console.log('Error al registrar el asistente', err);
+        this.toastSrv.error('Error al registrar el asistente');
+      }
+    })
   }
 
 }

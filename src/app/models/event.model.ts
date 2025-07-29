@@ -7,7 +7,7 @@ export interface EventIn {
   location: string;
   imageUrl: string;
   capacity: number;
-  attendees: number[];
+  attendees: string[];
   organizer: string;
   category: string;
 }

@@ -1,0 +1,32 @@
+<div
+    class="login-register-container fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 z-50">
+    <div class="flex flex-col justify-between items-center w-[50vw] p-4 bg-gray-200 gap-4 rounded-md shadow-lg"
+        [formGroup]="loginForm">
+        <h1 class="text-3xl font-medium">Iniciar Sesión</h1>
+        <div class="flex flex-col gap-4 w-[70%] relative">
+            <label for="email" class="text-md font-medium">Email</label>
+            <div class="flex justify-center items-center relative">
+                <input type="text" class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md"
+                    placeholder="Email" formControlName="email" [class.border-red-500]="loginForm.get('email')?.invalid"
+                    bg-gray-100>
+                <img src="assets/icons/mail.svg" alt="Email icon" class="w-6 h-6 absolute left-2">
+            </div>
+        </div>
+        <div class="flex flex-col gap-4 w-[70%]">
+            <label for="password" class="text-md font-medium">Contraseña</label>
+            <div class="flex justify-center items-center relative">
+                <input [type]="passwordVisible ? 'text' : 'password'"
+                    class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md bg-gray-100"
+                    placeholder="Password" formControlName="password">
+                <img [src]="passwordVisible ? 'assets/icons/eye-off.svg' : 'assets/icons/eye-show.svg'" alt="Eye icon"
+                    class="w-6 h-6 absolute left-2 cursor-pointer" (click)="passwordVisible = !passwordVisible">
+            </div>
+        </div>
+        <button
+            class="flex items-center gap-2 text-[color:var(--text-light)] cursor-pointer p-2 rounded-md hover:bg-[color:var(--background-primary)] bg-[color:var(--background-dark)]"
+            (click)="login()" [class.disabled]="loginForm.invalid">
+            <img src="assets/icons/login.svg" alt="Login icon" class="w-6 h-6">
+            <span>Iniciar Sesión</span>
+        </button>
+    </div>
+</div>

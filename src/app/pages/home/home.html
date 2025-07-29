@@ -1,5 +1,15 @@
 <div class="home-container flex flex-col w-full h-full px-6 py-4 gap-6">
-    <h1 class="text-xl font-medium">Próximos Eventos</h1>
+    <div class="flex justify-between items-center">
+        <h1 class="text-xl font-medium">Próximos Eventos</h1>
+        <div class="flex relative">
+            <input type="text" class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md" placeholder="Buscar eventos" (input)="inputSearch($any($event))">
+            <button class="absolute left-2 top-0 flex items-center h-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
+        </div>
+    </div>
     <div class="card-container grid grid-cols-3 gap-4 justify-start">
         @for (event of events; track event.id) {
             <app-event-card [event]="event"></app-event-card>

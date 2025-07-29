@@ -19,7 +19,7 @@ export class EventService {
       "location": "Buenos Aires, Argentina",
       "imageUrl": "https://picsum.photos/200/300?random=1",
       "capacity": 100,
-      "attendees": [101, 102],
+      "attendees": ['101', '102'],
       "organizer": "NGArgentina",
       "category": "Tecnología"
     },
@@ -32,7 +32,7 @@ export class EventService {
       "location": "Córdoba, Argentina",
       "imageUrl": "https://picsum.photos/200/300?random=2",
       "capacity": 30,
-      "attendees": [103],
+      "attendees": ['103'],
       "organizer": "UXStudio",
       "category": "Diseño"
     },
@@ -58,7 +58,7 @@ export class EventService {
       "location": "La Plata, Argentina",
       "imageUrl": "https://picsum.photos/200/300?random=4",
       "capacity": 80,
-      "attendees": [101, 104, 105],
+      "attendees": ['101', '104', '105'],
       "organizer": "TechStart La Plata",
       "category": "Negocios"
     },
@@ -71,7 +71,7 @@ export class EventService {
       "location": "Online",
       "imageUrl": "https://picsum.photos/200/300?random=5",
       "capacity": 300,
-      "attendees": [110, 111, 112, 113],
+      "attendees": ['110', '111', '112', '113'],
       "organizer": "AI Talks",
       "category": "Tecnología"
     }
@@ -81,7 +81,7 @@ export class EventService {
 
   getEvents(): Observable<EventIn[]> {
     // return this.httpC.get<any>(environment.apiUrl);
-    return of([...this.eventsMock]).pipe(delay(2000));
+    return of([...this.eventsMock]).pipe(delay(1000));
   }
 
   getEventById(id: string): Observable<EventIn> {
@@ -122,4 +122,18 @@ export class EventService {
     }
     return of('Evento eliminado');
   }
+
+  registerAttendee(eventId: string, attendeeId: string): Observable<string>{
+    const event = this.eventsMock.find(event => event.id === eventId);
+    if(!event){
+      return throwError(() => new Error("No se encontró el evento con el ID proporcionado"));
+    }
+    const attendee = event.attendees.find(attendee => attendee === attendeeId);
+    if(attendee){
+      return throwError(() => new Error("El asistente ya está registrado"));
+    }
+    event.attendees.push(attendeeId);
+    return of('Asistente registrado');
+  }
+
 }

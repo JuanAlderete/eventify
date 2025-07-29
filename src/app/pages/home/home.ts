@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { EventService } from '../../services/events.service';
 import { EventIn } from '../../models/event.model';
 import { EventCard } from '../../components/event-card/event-card';
@@ -13,7 +13,8 @@ import { EventCard } from '../../components/event-card/event-card';
 })
 export class Home implements OnInit {
 
-  events: EventIn[] = []
+  events: EventIn[] = [];
+  eventsCached: EventIn[] = [];
   eventsLoading: boolean = false;
 
   constructor(private readonly eventSrv: EventService){}
@@ -27,6 +28,7 @@ export class Home implements OnInit {
     this.eventSrv.getEvents().subscribe({
       next: (res) => {
         this.events = res;
+        this.eventsCached = [...res];
         console.log('Eventos', res);
       },
       error: (err) => {
@@ -36,6 +38,16 @@ export class Home implements OnInit {
         this.eventsLoading = false;
       }
     })
+  }
+
+  inputSearch(event: InputEvent){
+    const searchTerm = (event as any).target.value;
+    if(!searchTerm || searchTerm.length === 0 || searchTerm === ''){
+      this.events = [...this.eventsCached];
+      return;
+    }else{
+      this.events = this.eventsCached.filter(event => event.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-<div class="fixed top-20 right-20 flex flex-col gap-4 w-fit">
+<div class="fixed top-20 right-20 flex flex-col gap-4 w-fit z-100">
     <div *ngFor="let toast of toasts()" class="toast p-4 rounded-md text-white min-w-[200px] shadow-md" [ngClass]="toast.type">
         {{ toast.text }}
     </div>
