@@ -1,3 +1,26 @@
-<div class="h-[100dvh] flex column bg-blue-500">
-
+<div class="h-[100dvh] flex column bg-blue-500 p-4">
+  <!-- Información del usuario -->
+  @if (currentUser(); as user) {
+    <div class="text-white mb-4">
+      <h3 class="text-lg font-bold">Bienvenido, {{ user.name }}</h3>
+      <p class="text-sm opacity-80">{{ user.email }}</p>
+    </div>
+    <button 
+      (click)="logout()" 
+      class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors">
+      Cerrar Sesión
+    </button>
+  } @else {
+    <div class="text-white mb-4">
+      <h3 class="text-lg font-bold">No has iniciado sesión</h3>
+      <p class="text-sm opacity-80">Inicia sesión para continuar</p>
+    </div>
+  }
+  
+  <!-- Estado de autenticación en tiempo real -->
+  <div class="mt-4 p-2 bg-white bg-opacity-10 rounded">
+    <p class="text-white text-sm">
+      Estado: {{ currentUser() ? 'Conectado' : 'Desconectado' }}
+    </p>
+  </div>
 </div>

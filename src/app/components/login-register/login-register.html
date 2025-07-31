@@ -1,14 +1,16 @@
+@if(type === 'login'){
 <div
-    class="login-register-container fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 z-50">
+    class="login-register-container fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 z-50"
+    (click)="onBackdropClick($event)">
     <div class="flex flex-col justify-between items-center w-[50vw] p-4 bg-gray-200 gap-4 rounded-md shadow-lg"
         [formGroup]="loginForm">
         <h1 class="text-3xl font-medium">Iniciar Sesión</h1>
         <div class="flex flex-col gap-4 w-[70%] relative">
             <label for="email" class="text-md font-medium">Email</label>
             <div class="flex justify-center items-center relative">
-                <input type="text" class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md"
-                    placeholder="Email" formControlName="email" [class.border-red-500]="loginForm.get('email')?.invalid"
-                    bg-gray-100>
+                <input type="text" class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md bg-gray-100 placeholder:text-gray-400"
+                    placeholder="Email" formControlName="email"
+                    [class.border-red-500]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
                 <img src="assets/icons/mail.svg" alt="Email icon" class="w-6 h-6 absolute left-2">
             </div>
         </div>
@@ -16,7 +18,7 @@
             <label for="password" class="text-md font-medium">Contraseña</label>
             <div class="flex justify-center items-center relative">
                 <input [type]="passwordVisible ? 'text' : 'password'"
-                    class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md bg-gray-100"
+                    class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md bg-gray-100 placeholder:text-gray-400"
                     placeholder="Password" formControlName="password">
                 <img [src]="passwordVisible ? 'assets/icons/eye-off.svg' : 'assets/icons/eye-show.svg'" alt="Eye icon"
                     class="w-6 h-6 absolute left-2 cursor-pointer" (click)="passwordVisible = !passwordVisible">
@@ -25,8 +27,67 @@
         <button
             class="flex items-center gap-2 text-[color:var(--text-light)] cursor-pointer p-2 rounded-md hover:bg-[color:var(--background-primary)] bg-[color:var(--background-dark)]"
             (click)="login()" [class.disabled]="loginForm.invalid">
-            <img src="assets/icons/login.svg" alt="Login icon" class="w-6 h-6">
+            <img src="assets/icons/login.svg" alt="Login icon" class="w-6 h-6 invert">
             <span>Iniciar Sesión</span>
         </button>
     </div>
 </div>
+}
+@else {
+<div
+    class="login-register-container fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 z-50"
+    (click)="onBackdropClick($event)">
+    <div class="flex flex-col justify-between items-center w-[50vw] p-4 bg-gray-200 gap-4 rounded-md shadow-lg"
+        [formGroup]="registerForm">
+        <h1 class="text-3xl font-medium">Registro</h1>
+        <div class="flex flex-col gap-4 w-[70%] relative">
+            <label for="name" class="text-md font-medium">Nombre</label>
+            <div class="flex justify-center items-center relative">
+                <input type="text" class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md bg-gray-100 placeholder:text-gray-400"
+                    placeholder="Nombre" formControlName="name"
+                    [class.border-red-500]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+                <img src="assets/icons/user.svg" alt="Name icon" class="w-6 h-6 absolute left-2">
+            </div>
+        </div>
+        <div class="flex flex-col gap-4 w-[70%] relative">
+            <label for="email" class="text-md font-medium">Email</label>
+            <div class="flex justify-center items-center relative">
+                <input type="text" class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md bg-gray-100 placeholder:text-gray-400"
+                    placeholder="Email" formControlName="email"
+                    [class.border-red-500]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                <img src="assets/icons/mail.svg" alt="Email icon" class="w-6 h-6 absolute left-2">
+            </div>
+        </div>
+        <div class="flex flex-col gap-4 w-[70%]">
+            <label for="password" class="text-md font-medium">Contraseña</label>
+            <div class="flex justify-center items-center relative">
+                <input [type]="passwordVisible ? 'text' : 'password'"
+                    class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md bg-gray-100 placeholder:text-gray-400"
+                    placeholder="Contraseña" formControlName="password">
+                <img [src]="passwordVisible ? 'assets/icons/eye-off.svg' : 'assets/icons/eye-show.svg'" alt="Eye icon"
+                    class="w-6 h-6 absolute left-2 cursor-pointer" (click)="passwordVisible = !passwordVisible">
+            </div>
+        </div>
+        <div class="flex flex-col gap-4 w-[70%]">
+            <label for="confirmPassword" class="text-md font-medium">Confirmar Contraseña</label>
+            <div class="flex justify-center items-center relative">
+                <input [type]="passwordVisible ? 'text' : 'password'"
+                    class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md bg-gray-100 placeholder:text-gray-400"
+                    placeholder="Confirmar contraseña" formControlName="confirmPassword"
+                    [class.border-red-500]="(registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) || (this.registerForm.hasError('passwordsMismatch') && registerForm.get('confirmPassword')?.touched)">
+                <img [src]="passwordVisible ? 'assets/icons/eye-off.svg' : 'assets/icons/eye-show.svg'" alt="Eye icon"
+                    class="w-6 h-6 absolute left-2 cursor-pointer" (click)="passwordVisible = !passwordVisible">
+            </div>
+        </div>
+        <small *ngIf="(this.registerForm.hasError('passwordsMismatch') && registerForm.get('confirmPassword')?.touched)" class="text-red-500 text-sm justify-start w-[70%]">
+            Las contraseñas no coinciden
+        </small>
+        <button
+            class="flex items-center gap-2 text-[color:var(--text-light)] cursor-pointer p-2 rounded-md hover:bg-[color:var(--background-primary)] bg-[color:var(--background-dark)]"
+            (click)="register()" [class.disabled]="registerForm.invalid">
+            <img src="assets/icons/login.svg" alt="Login icon" class="w-6 h-6 invert">
+            <span>Registrar</span>
+        </button>
+    </div>
+</div>
+}

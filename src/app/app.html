@@ -2,22 +2,36 @@
     <nav class="flex justify-between items-center w-full h-[60px] px-4 bg-[color:var(--background-primary)]">
         <section class="left flex items-center w-[50vw] h-full gap-12">
             <h1 class="font-mono text-5xl text-[color:var(--primary-color)] uppercase cursor-pointer"
-                [routerLink]="['/']">{{title()}}</h1>
+                [routerLink]="['/']">{{title}}</h1>
             <ul class="flex gap-6 text-[color:var(--text-light)]">
-                @for (route of navRoutes(); track $index) {
-                <li><a href="#" [routerLink]="[route.path]" class="hover:bg-orange-900 p-2 rounded-md">{{route.title}}</a></li>
+                @for (route of navRoutes; track $index) {
+                    @if(!route.auth || (route.auth && currentUser())){
+                        <li><a href="#" [routerLink]="[route.path]"
+                                class="hover:bg-orange-900 p-2 rounded-md">{{route.title}}</a></li>
+                    }
                 }
             </ul>
         </section>
         <section class="right flex items-center w-[50vw] h-full justify-end">
             <div class="flex items-center gap-4">
+                @if (currentUser(); as user) {
+                <p class="text-md text-white">Bienvenido, {{ user.name }}</p>
                 <button
-                    class="flex items-center gap-2 text-[color:var(--text-light)] hover:bg-orange-900 cursor-pointer p-2 rounded-md">
+                    class="flex items-center gap-2 text-[color:var(--text-light)] hover:bg-orange-900 cursor-pointer p-2 rounded-md"
+                    (click)="logout()">
+                    <img src="assets/icons/log-out.svg" alt="Logout icon" class="w-6 h-6 invert">
+                    <span>Cerrar Sesión</span>
+                </button>
+                } @else {
+                <button
+                    class="flex items-center gap-2 text-[color:var(--text-light)] hover:bg-orange-900 cursor-pointer p-2 rounded-md"
+                    (click)="showModal.set(true); typeModal = 'login'">
                     <img src="assets/icons/login.svg" alt="Login icon" class="w-6 h-6 invert">
                     <span>Iniciar Sesión</span>
                 </button>
                 <button
-                    class="flex items-center gap-2 text-[color:var(--text-light)] hover:bg-orange-900 cursor-pointer p-2 rounded-md">
+                    class="flex items-center gap-2 text-[color:var(--text-light)] hover:bg-orange-900 cursor-pointer p-2 rounded-md"
+                    (click)="showModal.set(true); typeModal = 'register'">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -25,10 +39,13 @@
                     </svg>
                     <span>Registrarse</span>
                 </button>
+                }
             </div>
         </section>
     </nav>
     <router-outlet></router-outlet>
 </div>
-<app-login-register></app-login-register>
+@if(showModal()){
+<app-login-register [type]="typeModal" [showModal]="showModal"></app-login-register>
+}
 <app-toast></app-toast>

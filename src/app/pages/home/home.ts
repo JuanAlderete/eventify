@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { EventService } from '../../services/events.service';
 import { EventIn } from '../../models/event.model';
 import { EventCard } from '../../components/event-card/event-card';
@@ -17,7 +17,8 @@ export class Home implements OnInit {
   eventsCached: EventIn[] = [];
   eventsLoading: boolean = false;
 
-  constructor(private readonly eventSrv: EventService){}
+  constructor(private readonly eventSrv: EventService){
+  }
 
   ngOnInit(){
     this.getEvents();

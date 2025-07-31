@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { User } from '../models/user.model';
 import { v4 as uuid } from 'uuid'
 import { Observable, of, throwError } from 'rxjs';
@@ -7,8 +7,30 @@ import { Observable, of, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  private currentUserSignal = signal<User | null>(null);
+  
+  // Signal público para que los componentes se suscriban
+  public currentUser = this.currentUserSignal.asReadonly();
 
   constructor() {
+    this.initializeCurrentUser();
+  }
+
+  private initializeCurrentUser() {
+    const session = localStorage.getItem('session');
+    if (session) {
+      try {
+        const sessionEmail = JSON.parse(session);
+        const existingUsersJson = localStorage.getItem('users');
+        const existingUsers: User[] = existingUsersJson ? JSON.parse(existingUsersJson) : [];
+        const userData = existingUsers.find(user => user.email === sessionEmail);
+        if (userData) {
+          this.currentUserSignal.set(userData);
+        }
+      } catch (error) {
+        localStorage.removeItem('session');
+      }
+    }
   }
 
   async register(username: string, email: string, password: string): Promise<Observable<User>> {
@@ -34,6 +56,10 @@ export class AuthService {
     };
     existingUsers.push(userData);
     localStorage.setItem('users', JSON.stringify(existingUsers));
+    localStorage.setItem('session', JSON.stringify(userData!.email));
+    
+    this.currentUserSignal.set(userData);
+    
     return of(userData);
   }
 
@@ -61,11 +87,15 @@ export class AuthService {
       }));
     }
     localStorage.setItem('session', JSON.stringify(userData!.email));
+    
+    this.currentUserSignal.set(userData!);
+    
     return of(userData!);
   }
 
   logout(): Observable<boolean> {
     localStorage.removeItem('session');
+    this.currentUserSignal.set(null);
     return of(true);
   }
 
@@ -74,15 +104,20 @@ export class AuthService {
     if (!session) {
       return of(null);
     }
-    const existingUsersJson = localStorage.getItem('users');
-    const existingUsers: User[] = existingUsersJson ? JSON.parse(existingUsersJson) : [];
-    const userData = existingUsers.find(user => user.email === session);
-    return of(userData!);
+    try {
+      const sessionEmail = JSON.parse(session);
+      const existingUsersJson = localStorage.getItem('users');
+      const existingUsers: User[] = existingUsersJson ? JSON.parse(existingUsersJson) : [];
+      const userData = existingUsers.find(user => user.email === sessionEmail);
+      return of(userData || null);
+    } catch (error) {
+      localStorage.removeItem('session');
+      return of(null);
+    }
   }
 
-  isLoggedIn() {
-    const session = localStorage.getItem('session');
-    return !!session;
+  isLoggedInSignal() {
+    return this.currentUserSignal() !== null;
   }
 
   async hashPassword(password: string): Promise<string> {

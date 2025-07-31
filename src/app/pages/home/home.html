@@ -1,6 +1,8 @@
 <div class="home-container flex flex-col w-full h-full px-6 py-4 gap-6">
     <div class="flex justify-between items-center">
-        <h1 class="text-xl font-medium">Próximos Eventos</h1>
+        <div class="flex flex-col">
+            <h1 class="text-xl font-medium">Próximos Eventos</h1>
+        </div>
         <div class="flex relative">
             <input type="text" class="w-full rounded-md border border-gray-300 p-2 pl-10 text-md" placeholder="Buscar eventos" (input)="inputSearch($any($event))">
             <button class="absolute left-2 top-0 flex items-center h-full">

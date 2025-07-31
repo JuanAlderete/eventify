@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-left-nav',
@@ -9,5 +10,14 @@ import { Component } from '@angular/core';
   styleUrl: './left-nav.scss'
 })
 export class LeftNav {
+  private authService = inject(AuthService);
+  currentUser = this.authService.currentUser;
 
+  constructor() { }
+
+  logout() {
+    this.authService.logout().subscribe(() => {
+      console.log('Usuario deslogueado');
+    });
+  }
 }
