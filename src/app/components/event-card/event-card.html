@@ -25,7 +25,7 @@
     </div>
     <div class="flex justify-between gap-4 w-full">
         <p><strong>Titulo: </strong>{{ event.title || 'Evento sin nombre' }}</p>
-        <a href="#" [routerLink]="['events/' + event.id]"
+        <a href="#" [routerLink]="['/my-events/' + event.id]"
             class="text-md font-bold text-[color:var(--background-primary)] hover:text-orange-700">Ver detalles</a>
     </div>
 </div>

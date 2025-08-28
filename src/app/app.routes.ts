@@ -6,10 +6,10 @@ import { EventsAll } from './pages/events/events-all/events-all';
 import { LeftNav } from './components/left-nav/left-nav';
 
 export const routes: Routes = [
-    { path: '', component: Home },
-    { path: 'events/:id', component: EventDetails },
-    { path: 'create', component: EventCreate },
-    { path: 'create/:id', component: EventCreate },
-    { path: 'my-events', component: EventsAll },
-    { path: '**', redirectTo: '' }
+  { path: '', component: Home },
+  { path: 'create', component: EventCreate },
+  { path: 'create/:id', component: EventCreate },
+  { path: 'my-events', component: EventsAll },
+  { path: 'my-events/:id', component: EventDetails },
+  { path: '**', redirectTo: '' },
 ];

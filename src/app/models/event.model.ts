@@ -1,5 +1,6 @@
 export interface EventIn {
   id: string;
+  idOrganizer: string;
   title: string;
   description: string;
   date: string; // la fecha guardar en formato ISO, sino desp me olvido
@@ -11,3 +12,5 @@ export interface EventIn {
   organizer: string;
   category: string;
 }
+
+//FALTA AGREGAR EL NOMBRE DE ORGANIZADOR PARA MOSTRAR EN EL DETALLE DEL EVENTO

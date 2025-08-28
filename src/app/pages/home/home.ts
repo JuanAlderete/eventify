@@ -20,11 +20,11 @@ export class Home implements OnInit {
   constructor(private readonly eventSrv: EventService){
   }
 
-  ngOnInit(){
+  ngOnInit(): void{
     this.getEvents();
   }
 
-  getEvents(){
+  getEvents(): void{
     this.eventsLoading = true;
     this.eventSrv.getEvents().subscribe({
       next: (res) => {
@@ -41,7 +41,7 @@ export class Home implements OnInit {
     })
   }
 
-  inputSearch(event: InputEvent){
+  inputSearch(event: InputEvent): void{
     const searchTerm = (event as any).target.value;
     if(!searchTerm || searchTerm.length === 0 || searchTerm === ''){
       this.events = [...this.eventsCached];
